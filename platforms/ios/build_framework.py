@@ -40,7 +40,7 @@ def build_opencv(srcroot, buildroot, target, arch):
                 "-D BUILD_SHARED_LIBS=OFF "+
                 "-D BUILD_opencv_core=ON "+
                 "-D BUILD_opencv_imgproc=ON "+
-                "-D BUILD_opencv_world=OFF "+
+                "-D BUILD_opencv_world=ON "+
                 "-D BUILD_opencv_gpu=OFF "+
                 "-D BUILD_opencv_calib3d=OFF "+
                 "-D BUILD_opencv_contrib=OFF "+
