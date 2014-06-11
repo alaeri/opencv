@@ -37,26 +37,26 @@ def build_opencv(srcroot, buildroot, target, arch):
     os.chdir(builddir)
     # for some reason, if you do not specify CMAKE_BUILD_TYPE, it puts libs to "RELEASE" rather than "Release"
     cmakeargs = ("-GXcode " +
-                "-DCMAKE_BUILD_TYPE=Release " +
-                "-DCMAKE_TOOLCHAIN_FILE=%s/platforms/ios/cmake/Toolchains/Toolchain-%s_Xcode.cmake " +
-                "-DBUILD_opencv_world=ON " +
+                "-D BUILD_SHARED_LIBS=OFF "+
+                "-D BUILD_opencv_core=ON "+
+                "-D BUILD_opencv_imgproc=ON "+
+                "-D BUILD_opencv_world=OFF "+
                 "-D BUILD_opencv_gpu=OFF "+
-                "-D BUILD_opencv_core=OFF "+
                 "-D BUILD_opencv_calib3d=OFF "+
                 "-D BUILD_opencv_contrib=OFF "+
-"-D BUILD_opencv_core=ON "+
-"-D BUILD_opencv_features2D=OFF "+
-"-D BUILD_opencv_flann=OFF "+
-"-D BUILD_opencv_highgui=OFF "+
-"-D BUILD_opencv_imgproc=ON "+
-"-D BUILD_opencv_legacy=OFF "+
-"-D BUILD_opencv_ml=OFF "+
-"-D BUILD_opencv_nonfree=OFF "+
-"-D BUILD_opencv_objdetect=OFF "+
-"-D BUILD_opencv_photo=OFF "+
-"-D BUILD_opencv_stitching=OFF "+
-"-D BUILD_opencv_video=OFF "+
-"-D BUILD_opencv_videostab=OFF "+
+                "-D BUILD_opencv_features2D=OFF "+
+                "-D BUILD_opencv_flann=OFF "+
+                "-D BUILD_opencv_highgui=OFF "+
+                "-D BUILD_opencv_legacy=OFF "+
+                "-D BUILD_opencv_ml=OFF "+
+                "-D BUILD_opencv_nonfree=OFF "+
+                "-D BUILD_opencv_objdetect=OFF "+
+                "-D BUILD_opencv_photo=OFF "+
+                "-D BUILD_opencv_stitching=OFF "+
+                "-D BUILD_opencv_video=OFF "+
+                "-D BUILD_opencv_videostab=OFF "+
+                "-DCMAKE_BUILD_TYPE=Release " +
+                "-DCMAKE_TOOLCHAIN_FILE=%s/platforms/ios/cmake/Toolchains/Toolchain-%s_Xcode.cmake " +
                 "-DCMAKE_INSTALL_PREFIX=install") % (srcroot, target)
     # if cmake cache exists, just rerun cmake to update OpenCV.xproj if necessary
     if os.path.isfile(os.path.join(builddir, "CMakeCache.txt")):
@@ -113,8 +113,8 @@ def put_framework_together(srcroot, dstroot):
 def build_framework(srcroot, dstroot):
     "main function to do all the work"
 
-    targets = ["iPhoneSimulator"]
-    archs = ["i386"]
+    targets = ["iPhoneOS", "iPhoneOS", "iPhoneOS", "iPhoneSimulator", "iPhoneSimulator"]
+    archs = ["armv7", "armv7s", "arm64", "i386", "x86_64"]
     for i in range(len(targets)):
         build_opencv(srcroot, os.path.join(dstroot, "build"), targets[i], archs[i])
 
